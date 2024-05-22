@@ -23,7 +23,7 @@ nuxtApp.provide('themeVars', themeVars);
 
 <template>
   <NSpin :show="appStore.isLoading">
-    <template v-if="appStore.isLoadingMessage" #description>
+    <template v-if="appStore.loadingMessage" #description>
       <span class="font-black text-primary">
         {{ appStore.loadingMessage }}
       </span>

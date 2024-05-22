@@ -15,9 +15,8 @@ watch(
 </script>
 
 <template>
-  <div :class="{ dark: appStore.isDark }">
-    <NConfigProvider id="appRoot" class="demo" :theme="appStore.theme" :theme-overrides="appStore.themeOverrides"
-      :locale="appStore.naiveUiLocale" :date-locale="appStore.naiveUiLocaleDate">
+  <div>
+    <NConfigProvider id="appRoot" class="demo" :theme="appStore.theme">
       <FormProvider>
         <NDialogProvider>
           <NMessageProvider>
