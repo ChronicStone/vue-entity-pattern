@@ -10,7 +10,9 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@chronicstone/vue-sweettools": "^0.6.1",
+    "@chronicstone/vue-sweettools": "next",
+    "@nuxt/eslint": "latest",
+    "@unocss/nuxt": "^0.60.3",
     "@vueuse/core": "^10.9.0",
     "nuxt": "^3.11.2",
     "vue": "^3.4.27",
@@ -19,6 +21,17 @@
   "devDependencies": {
     "@bg-dev/nuxt-naiveui": "^1.13.3",
     "@nuxtjs/tailwindcss": "latest",
-    "@pinia/nuxt": "latest"
+    "@pinia/nuxt": "latest",
+    "prettier": "^3.2.5",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@nuxtjs/eslint-module": "^4.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-vue": "^9.17.0",
+    "vue-eslint-parser": "^9.3.1"
   }
 }
