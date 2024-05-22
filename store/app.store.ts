@@ -11,7 +11,6 @@ export const useAppStore = defineStore('app', () => {
   
     function toggleTheme() {
         isDark.value = !isDark.value
-        document?.querySelector('body')?.classList.toggle('dark', isDark.value)
     }
 
     function startLoading(message?: string) {
