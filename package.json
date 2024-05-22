@@ -11,12 +11,14 @@
   },
   "dependencies": {
     "@chronicstone/vue-sweettools": "next",
+    "@faker-js/faker": "^8.4.1",
     "@nuxt/eslint": "latest",
     "@unocss/nuxt": "^0.60.3",
     "@vueuse/core": "^10.9.0",
     "nuxt": "^3.11.2",
     "vue": "^3.4.27",
-    "vue-router": "^4.3.2"
+    "vue-router": "^4.3.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@bg-dev/nuxt-naiveui": "^1.13.3",
