@@ -2,12 +2,14 @@
 export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
-  modules: [
-    '@bg-dev/nuxt-naiveui',
-    '@pinia/nuxt',
-    '@nuxtjs/tailwindcss',
-  ],
+  modules: ['@bg-dev/nuxt-naiveui', '@pinia/nuxt', '@nuxt/eslint', '@unocss/nuxt'],
   imports: {
-    dirs: ['./store', './entity', './composables']
-  }
-})
+    dirs: ['./store', './composables', 'entities/**/*'],
+  },
+  components: {
+    dirs: [{ path: 'components', pathPrefix: false }],
+  },
+  experimental: {
+    typedPages: true,
+  },
+});
