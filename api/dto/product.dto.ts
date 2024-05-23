@@ -1,29 +1,17 @@
 import { z } from 'zod';
+import { userDto } from './user.dto';
 
 export const productStatusDto = z.enum(['Draft', 'Active', 'Disabled']);
-export const productCategoryDto = z.enum(['Men', 'Women', 'Kids', 'Unisex']);
-export const productSizeDto = z.enum(['XS', 'S', 'M', 'L', 'XL', 'XXL']);
-export const productColorDto = z.enum([
-  'Red',
-  'Blue',
-  'Green',
-  'Black',
-  'White',
-  'Yellow',
-  'Pink',
-  'Orange',
-  'Purple',
-  'Brown',
+export const productCategoryDto = z.enum([
+  'Clothing',
+  'Accessories',
+  'Footwear',
+  'Electronics',
+  'Home',
+  'Beauty',
+  'Food',
+  'Gifts',
 ]);
-export const productMaterialDto = z.enum(['Cotton', 'Polyester', 'Wool', 'Silk', 'Linen', 'Leather']);
-
-// Define stock schema
-export const productStockDto = z.object({
-  size: productSizeDto,
-  color: productColorDto,
-  quantity: z.number().int().min(0),
-  sku: z.string(),
-});
 
 // Define product schema
 export const productDto = z.object({
@@ -33,18 +21,11 @@ export const productDto = z.object({
   status: productStatusDto,
   category: productCategoryDto,
   price: z.number().positive(),
-  materials: z.array(productMaterialDto),
   images: z.array(z.string().url()),
-  stock: z.array(productStockDto),
-  dimensions: z
-    .object({
-      weight: z.number().positive().optional(),
-      length: z.number().positive().optional(),
-      width: z.number().positive().optional(),
-      height: z.number().positive().optional(),
-    })
-    .optional(),
+  stock: z.number().int().min(0),
   tags: z.array(z.string()).optional(),
+  sellerId: z.string(),
+  seller: userDto,
 });
 
 export const createProductDto = productDto.omit({

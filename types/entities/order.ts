@@ -3,4 +3,4 @@ import type { deliveryStatusDto, orderDto, orderStatusDto } from '~/api/dto/orde
 
 export type Order = z.infer<typeof orderDto>;
 export type OrderStatus = z.infer<typeof orderStatusDto>;
-export type DeliveryStatus = z.infer<typeof deliveryStatusDto>;
+export type OrderDeliveryStatus = z.infer<typeof deliveryStatusDto>;
