@@ -1,6 +1,6 @@
 import { match } from 'ts-pattern';
 import { NTag } from 'naive-ui';
-import type { OrderDeliveryStatus, OrderStatus } from '~/types/entities/status';
+import type { OrderDeliveryStatus, OrderStatus } from '~/types/entities/order';
 
 export function renderOrderStatus(status: OrderStatus) {
   return match(status)
