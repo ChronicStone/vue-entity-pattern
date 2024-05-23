@@ -60,7 +60,7 @@ export function renderProductPopoverCard(product: Product) {
     <NTag>
       {{
         default: () => product.name,
-        avatar: <NAvatar src={product.images[0]} />,
+        avatar: () => <NAvatar src={product.images[0]} />,
       }}
     </NTag>
     //     ),

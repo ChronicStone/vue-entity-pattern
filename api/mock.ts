@@ -11,15 +11,15 @@ export function generateProducts(
   const products = [];
 
   for (let i = 0; i < count; i++) {
-    const id = faker.datatype.uuid();
+    const id = faker.string.uuid();
     const name = faker.commerce.productName();
     const description = faker.commerce.productDescription();
     const status = productStatusDto.options[Math.floor(Math.random() * productStatusDto.options.length)];
     const category =
       productCategoryDto.options[Math.floor(Math.random() * productCategoryDto.options.length)];
-    const price = parseFloat(faker.commerce.price(10, 500));
-    const images = Array.from({ length: Math.floor(Math.random() * 5) + 1 }, () => faker.image.imageUrl());
-    const stock = faker.datatype.number({ min: 0, max: 100 });
+    const price = parseFloat(faker.commerce.price({ min: 10, max: 500 }));
+    const images = Array.from({ length: Math.floor(Math.random() * 5) + 1 }, () => faker.image.url());
+    const stock = faker.number.int({ min: 0, max: 100 });
     const tags = Array.from({ length: Math.floor(Math.random() * 5) + 1 }, () =>
       faker.commerce.productAdjective(),
     );
@@ -49,17 +49,17 @@ export function generateUsers(count: number): z.infer<typeof userDto>[] {
   const users = [];
 
   for (let i = 0; i < count; i++) {
-    const id = faker.datatype.uuid();
-    const firstName = faker.name.firstName();
-    const lastName = faker.name.lastName();
-    const email = faker.internet.email(firstName, lastName);
+    const id = faker.string.uuid();
+    const firstName = faker.person.firstName();
+    const lastName = faker.person.lastName();
+    const email = faker.internet.email({ firstName, lastName });
     const phoneNumber = faker.phone.number();
     const address = {
-      street: faker.address.streetAddress(),
-      city: faker.address.city(),
-      state: faker.address.state(),
-      postalCode: faker.address.zipCode(),
-      country: faker.address.country(),
+      street: faker.location.streetAddress(),
+      city: faker.location.city(),
+      state: faker.location.state(),
+      postalCode: faker.location.zipCode(),
+      country: faker.location.country(),
     };
 
     const user = {
@@ -88,10 +88,10 @@ export function generateOrders(
   const orders = [];
 
   for (let i = 0; i < count; i++) {
-    const id = faker.datatype.uuid();
+    const id = faker.string.uuid();
     const buyer = buyers[Math.floor(Math.random() * buyers.length)];
     const product = products[Math.floor(Math.random() * products.length)];
-    const amount = faker.datatype.number({ min: 1, max: 10 });
+    const amount = faker.number.int({ min: 1, max: 10 });
     const totalPrice = product.price * amount;
     const status = orderStatusDto.options[Math.floor(Math.random() * orderStatusDto.options.length)];
     const statusDelivery =

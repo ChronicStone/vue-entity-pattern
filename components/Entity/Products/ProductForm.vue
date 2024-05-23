@@ -21,7 +21,7 @@ const { formData, validate } = useFormController(formRef, productFormSchema());
 
 async function handleSubmit() {
   if (!(await validate())) return;
-  if (productId.value) createProduct();
+  if (!productId.value) createProduct();
   else updateProduct();
 }
 
@@ -67,7 +67,7 @@ async function updateProduct() {
       <FormActions
         :mode="productId ? 'update' : 'create'"
         @submit="handleSubmit"
-        @cancel="productId ? navigateTo(`/products/${productId}`) : navigateTo('/products')"
+        @cancel="productId ? navigateTo(`/products/${productId}`) : navigateTo('/')"
       />
     </template>
   </NCard>

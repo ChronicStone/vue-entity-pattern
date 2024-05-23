@@ -16,7 +16,12 @@ watch(
 
 <template>
   <div>
-    <NConfigProvider id="appRoot" class="demo" :theme="appStore.theme">
+    <NConfigProvider
+      id="appRoot"
+      class="demo"
+      :theme="appStore.theme"
+      :theme-overrides="appStore.themeOverrides"
+    >
       <FormProvider>
         <NDialogProvider>
           <NMessageProvider>

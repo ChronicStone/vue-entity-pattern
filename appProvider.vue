@@ -2,8 +2,8 @@
 import { useFormApi } from '@chronicstone/vue-sweettools';
 import { useThemeVars } from 'naive-ui';
 
-const route = useRoute();
 const appStore = useAppStore();
+const userStore = useUserStore();
 const nuxtApp = useNuxtApp();
 
 const formApi = useFormApi();
@@ -30,7 +30,7 @@ nuxtApp.provide('themeVars', themeVars);
     </template>
     <div>
       <NuxtLayout>
-        <NuxtPage />
+        <NuxtPage :key="`${userStore.activeEntity}-${userStore.activeUserId}`" />
       </NuxtLayout>
     </div>
   </NSpin>

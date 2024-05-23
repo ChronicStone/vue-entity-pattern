@@ -4,11 +4,13 @@ import type { ComputedRef } from 'vue';
 
 declare module '#vue-router' {
   interface RouteMeta {
+    entities?: Array<'admin' | 'user'>;
   }
 }
 
 declare module '#app' {
   interface PageMeta {
+    entities?: Array<'admin' | 'user'>;
   }
 
   interface NuxtApp {

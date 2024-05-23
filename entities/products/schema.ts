@@ -90,7 +90,6 @@ export function productFormSchema() {
         required: true,
         options: Object.values(productCategoryDto.enum),
       },
-      { key: 'description', type: 'textarea', label: 'Description', required: false, size: 8 },
       { key: 'price', type: 'number', label: 'Price', required: true, fieldParams: { prefix: '$' } },
       { key: 'stock', type: 'number', label: 'Stock', required: true, fieldParams: { min: 0, step: 1 } },
       {
@@ -106,6 +105,8 @@ export function productFormSchema() {
       },
       // { key: 'images', type: 'file', label: 'Images', required: true, multiple: true },
       { key: 'tags', type: 'tag', label: 'Tags', required: false },
+      { key: 'description', type: 'textarea', label: 'Description', required: false, size: 8 },
+
       {
         key: 'images',
         type: 'upload',
@@ -115,6 +116,7 @@ export function productFormSchema() {
         output: 'url',
         fieldParams: {
           listType: 'image-card',
+          accept: 'image/*',
         },
         uploadHandler: (opts) => {
           opts.file.url = faker.image.url();

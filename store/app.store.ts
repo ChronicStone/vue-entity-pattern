@@ -1,4 +1,4 @@
-import { darkTheme, type GlobalTheme } from 'naive-ui';
+import { darkTheme, type GlobalTheme, type GlobalThemeOverrides } from 'naive-ui';
 import { useStorage as useVStorage } from '@vueuse/core';
 
 export const useAppStore = defineStore('app', () => {
@@ -7,6 +7,9 @@ export const useAppStore = defineStore('app', () => {
 
   const isDark = useVStorage('app-theme', false, localStorage);
   const theme = computed<GlobalTheme | null>(() => (isDark.value ? darkTheme : null));
+  const themeOverrides = computed<GlobalThemeOverrides>(() =>
+    isDark.value ? DarkThemeOverrides : LightThemeOverrides,
+  );
 
   function toggleTheme() {
     isDark.value = !isDark.value;
@@ -27,6 +30,7 @@ export const useAppStore = defineStore('app', () => {
     theme,
     isLoading,
     loadingMessage,
+    themeOverrides,
     startLoading,
     toggleTheme,
     stopLoading,

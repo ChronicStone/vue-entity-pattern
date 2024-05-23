@@ -8,3 +8,17 @@
   opacity: 0;
 }
 
+
+.slide-fade-reverse-enter-active,
+.slide-fade-reverse-leave-active {
+    transition: opacity 0.1s, transform 0.1s;
+}
+.slide-fade-reverse-enter-from {
+    opacity: 0;
+    transform: translateX(30%);
+}
+
+.slide-fade-reverse-leave-to {
+    opacity: 0;
+    transform: translateX(-30%);
+}

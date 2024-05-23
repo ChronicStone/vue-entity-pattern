@@ -6,6 +6,7 @@ export default defineNuxtConfig({
       title: 'Entity repo | Demo',
       script: [{ src: 'https://code.iconify.design/1/1.0.0/iconify.min.js' }],
     },
+    pageTransition: { mode: 'out-in', name: 'slide-fade-reverse' },
   },
   devtools: { enabled: true },
   typescript: {

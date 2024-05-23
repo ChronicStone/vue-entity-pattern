@@ -1,7 +1,3 @@
-<script setup lang="ts">
-const userStore = useUserStore();
-</script>
-
 <template>
   <div class="h-screen w-screen">
     <n-layout position="absolute">
@@ -13,7 +9,7 @@ const userStore = useUserStore();
           <SideMenu />
         </n-layout-sider>
         <n-layout content-class="p-6">
-          <div :key="`${userStore.activeEntity}-${userStore.activeUserId}`">
+          <div>
             <slot />
           </div>
         </n-layout>
