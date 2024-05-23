@@ -1,6 +1,8 @@
 import { match } from 'ts-pattern';
-import { NTag, NPopover, NAvatar } from 'naive-ui';
+import { NTag, NPopover, NAvatar, NCard, NButton, NTooltip } from 'naive-ui';
+import { DataGrid } from '@chronicstone/vue-sweettools';
 import type { Product, ProductStatus } from '~/types/entities/product';
+import { Icon, NuxtLink } from '#components';
 
 export function renderProductStatus(status: ProductStatus) {
   const color = match(status)
@@ -54,18 +56,39 @@ export function renderProductTags(tags: string[], limit?: number) {
 
 export function renderProductPopoverCard(product: Product) {
   return (
-    // <NPopover>
-    //   {{
-    //     trigger: () => (
-    <NTag>
+    <NPopover style="padding: 0">
       {{
-        default: () => product.name,
-        avatar: () => <NAvatar src={product.images[0]} />,
+        trigger: () => (
+          <NTag>
+            {{
+              default: () => product.name,
+              avatar: () => <NAvatar src={product.images[0]} />,
+            }}
+          </NTag>
+        ),
+        default: () => (
+          <NCard class="max-w-100" segmented headerClass="!p-2">
+            {{
+              header: () => <div>Product details</div>,
+              'header-extra': () => (
+                <NTooltip>
+                  {{
+                    default: () => 'View more',
+                    trigger: () => (
+                      <NuxtLink to={{ name: 'products-productId', params: { productId: product.id } }}>
+                        <NButton secondary size="tiny">
+                          {{ icon: () => <Icon name="mdi:eye" /> }}
+                        </NButton>
+                      </NuxtLink>
+                    ),
+                  }}
+                </NTooltip>
+              ),
+              default: () => <DataGrid data={product} {...productProfileSchema()} gridColSize={'1 md:2'} />,
+            }}
+          </NCard>
+        ),
       }}
-    </NTag>
-    //     ),
-    //     default: () => (
-    //   }}
-    // </NPopover>
+    </NPopover>
   );
 }

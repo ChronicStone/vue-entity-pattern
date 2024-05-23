@@ -15,7 +15,6 @@ export const useUserStore = defineStore('user', () => {
   watch(
     () => renderKey.value,
     () => {
-      console.log('KEY CHANGED');
       if (!route.meta.entities) return;
       if (!isEntity(route.meta.entities)) return navigateTo('/');
     },

@@ -4,6 +4,8 @@ import { Icon, NuxtLink } from '#components';
 import type { NavigationItem } from '~/types/system/navigation';
 
 const userStore = useUserStore();
+const isSmallScreen = useIsSmallScreen();
+const { collapsed } = defineModels<{ collapsed: boolean }>();
 
 function renderIcon(icon: string) {
   return () => <Icon name={icon} />;
@@ -28,7 +30,14 @@ const navOptions = computed(() => mapOptions(NAVIGATION_CONFIG));
 
 <template>
   <div class="h-full flex flex-col">
-    <n-menu :options="navOptions" :value="$route.name" />
+    <n-menu
+      :options="navOptions"
+      :value="$route.name"
+      :collapsed-width="isSmallScreen ? 0 : 64"
+      :collapsed-icon-size="22"
+      :collapsed="collapsed"
+      :on-update:value="() => isSmallScreen && (collapsed = true)"
+    />
 
     <div class="mt-auto p-2 flex flex-col gap-2">
       <NSelect
@@ -37,6 +46,7 @@ const navOptions = computed(() => mapOptions(NAVIGATION_CONFIG));
           { label: 'User', value: 'user' },
           { label: 'Admin', value: 'admin' },
         ]"
+        :consistent-menu-width="!collapsed"
       />
 
       <NSelect
@@ -45,6 +55,7 @@ const navOptions = computed(() => mapOptions(NAVIGATION_CONFIG));
         :options="userStore.users || []"
         :render-label="renderUserSelectLabel"
         :render-tag="renderUserSelectTag({ multiple: false })"
+        :consistent-menu-width="!collapsed"
       />
     </div>
   </div>

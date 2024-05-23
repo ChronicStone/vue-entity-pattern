@@ -17,7 +17,6 @@ export function orderTableSchema(params?: { productId?: string }) {
     ],
     filters: [
       userFilter({ key: 'buyerId', label: 'Buyer' }),
-      //   userFilter({ key: 'product.seller.id', label: 'Seller' }),
       timeRangeFilter({ key: 'createdAt', label: 'Created at' }),
     ],
     columns: [
@@ -69,6 +68,7 @@ export function orderTableSchema(params?: { productId?: string }) {
 }
 
 export function orderFormSchema(params?: { productId?: string }) {
+  const userStore = useUserStore();
   return buildFormSchema({
     title: 'Create order',
     maxWidth: '600px',
@@ -82,6 +82,9 @@ export function orderFormSchema(params?: { productId?: string }) {
           renderLabel: renderUserSelectLabel,
           renderTag: renderUserSelectTag({ multiple: false }),
         },
+        conditionEffect: 'disable',
+        condition: () => !isEntity(['user']),
+        default: isEntity(['user']) ? userStore.activeUserId : null,
       },
       {
         key: 'productId',
@@ -109,7 +112,7 @@ export function orderFormSchema(params?: { productId?: string }) {
       },
       {
         type: 'info',
-        key: '',
+        key: 'totalPrices',
         label: 'Total price',
         dependencies: ['amount', 'productId'],
         content: (deps, api) => {
