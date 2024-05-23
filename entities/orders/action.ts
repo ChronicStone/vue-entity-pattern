@@ -1,10 +1,10 @@
 import { ApiClient } from '~/api';
 
-export async function createOrder() {
+export async function createOrder(params?: { productId?: string }) {
   const appStore = useAppStore();
   const { $messageApi, $formApi } = useNuxtApp();
   try {
-    const { formData, isCompleted } = await $formApi.createForm(orderFormSchema(), {
+    const { formData, isCompleted } = await $formApi.createForm(orderFormSchema(params), {
       buyerId: '',
       productId: '',
       amount: 1,

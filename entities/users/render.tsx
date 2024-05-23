@@ -6,6 +6,7 @@ import {
   type SelectRenderLabel,
   NText,
   type AvatarProps,
+  NEllipsis,
 } from 'naive-ui';
 import { match } from 'ts-pattern';
 import type { User, UserStatus } from '../../types/entities/user';
@@ -92,7 +93,9 @@ export const renderUserSelectTag: (params: { multiple: boolean }) => SelectRende
 export const renderUserSelectLabel: SelectRenderLabel = (option) => {
   return (
     <div class="flex items-center gap-3 p-1">
-      <NAvatar size="small" round src={option.imageUrl as string} />
+      <div class="h-fit w-5 mr-2">
+        <NAvatar size={30} round src={option.imageUrl as string} />
+      </div>
       <div class="flex flex-col ">
         <span>{option.label}</span>
         <NText depth={3} tag="span">

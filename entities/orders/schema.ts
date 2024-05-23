@@ -1,11 +1,14 @@
 import { buildFormSchema, buildTableSchema, timeRangeFilter } from '@chronicstone/vue-sweettools';
 import { ApiClient } from '~/api';
 
-export function orderTableSchema() {
+export function orderTableSchema(params?: { productId?: string }) {
   return buildTableSchema({
     tableKey: 'orders',
     remote: false,
     searchQuery: ['product.name', 'product.category', 'product.tags'],
+    staticFilters: params?.productId
+      ? [{ key: 'productId', value: params.productId, matchMode: 'equals' }]
+      : [],
     filters: [
       userFilter({ key: 'buyerId', label: 'Buyer' }),
       //   userFilter({ key: 'product.seller.id', label: 'Seller' }),
@@ -59,13 +62,13 @@ export function orderTableSchema() {
       {
         label: 'Create order',
         icon: 'mdi:plus',
-        action: ({ tableApi }) => createOrder().then((refresh) => refresh && tableApi.refreshData()),
+        action: ({ tableApi }) => createOrder(params).then((refresh) => refresh && tableApi.refreshData()),
       },
     ],
   });
 }
 
-export function orderFormSchema() {
+export function orderFormSchema(params?: { productId?: string }) {
   return buildFormSchema({
     title: 'Create order',
     maxWidth: '600px',
@@ -85,6 +88,9 @@ export function orderFormSchema() {
         label: 'Product',
         type: 'select',
         options: getProductOptions,
+        conditionEffect: 'disable',
+        condition: () => !params?.productId,
+        default: params?.productId,
       },
       {
         key: 'amount',
