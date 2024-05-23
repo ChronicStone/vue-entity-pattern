@@ -15,6 +15,7 @@ module.exports = {
     'vue/no-multiple-template-root': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     'no-async-promise-executor': 'off',
-    'import/no-duplicates': ['error', { 'prefer-inline': true }],
+    'import/no-duplicates': 'error',
+    'no-use-before-define': 'off',
   },
 };
