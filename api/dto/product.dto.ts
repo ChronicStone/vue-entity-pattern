@@ -30,6 +30,13 @@ export const productDto = z.object({
 
 export const createProductDto = productDto.omit({
   id: true,
+  status: true,
+  seller: true,
 });
 
-export const updateProductDto = createProductDto.extend({});
+export const importProductsDto = z.array(createProductDto);
+
+export const updateProductDto = productDto.omit({
+  id: true,
+  seller: true,
+});

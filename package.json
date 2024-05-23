@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@chronicstone/typed-xlsx": "^0.2.16",
     "@chronicstone/vue-sweettools": "1.0.0-rc49",
     "@faker-js/faker": "8.4.1",
     "@nuxt/eslint": "latest",

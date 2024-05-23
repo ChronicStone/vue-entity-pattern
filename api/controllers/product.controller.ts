@@ -1,7 +1,7 @@
 import type { z } from 'zod';
 import { faker } from '@faker-js/faker';
-import { PRODUCTS_STORE } from '../store';
-import type { createProductDto } from '../dto/product.dto';
+import { PRODUCTS_STORE, USERS_STORE } from '../store';
+import { importProductsDto, productStatusDto, type createProductDto } from '../dto/product.dto';
 
 export const ProductController = {
   async list() {
@@ -16,9 +16,19 @@ export const ProductController = {
     return await Promise.resolve(product);
   },
   async create(product: z.infer<typeof createProductDto>) {
-    const _product = { ...product, id: faker.string.uuid() };
+    const seller = USERS_STORE.find((u) => u.id === product.sellerId);
+    if (!seller) throw new Error(`Seller ${product.sellerId} not found`);
+
+    const _product = { ...product, id: faker.string.uuid(), seller, status: productStatusDto.enum.Active };
     PRODUCTS_STORE.push(_product);
     return await Promise.resolve(_product);
+  },
+  async import(products: z.infer<typeof importProductsDto>) {
+    const createdProducts = await Promise.all(
+      products.map(async (product) => await ProductController.create(product)),
+    );
+
+    return await Promise.resolve(createdProducts);
   },
   async update(productId: string, product: Partial<z.infer<typeof createProductDto>>) {
     const productIndex = PRODUCTS_STORE.findIndex((p) => p.id === productId);
