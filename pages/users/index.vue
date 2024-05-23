@@ -4,6 +4,6 @@ import { DataTable } from '@chronicstone/vue-sweettools';
 
 <template>
   <div>
-    <DataTable v-bind="productTableSchema()"> Products </DataTable>
+    <DataTable v-bind="userTableSchema()"> Users </DataTable>
   </div>
 </template>
