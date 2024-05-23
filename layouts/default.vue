@@ -2,14 +2,14 @@
   <div class="h-screen w-screen">
     <n-layout position="absolute">
       <n-layout-header class="!h-[64px] p-4 flex items-center" bordered>
-        <NH2 class="!m-0">Entity repo pattern demo</NH2>
+        <Header />
       </n-layout-header>
       <n-layout has-sider position="absolute" class="!top-[64px]">
-        <n-layout-sider bordered content-class="p-6">
-          <SideControls />
+        <n-layout-sider bordered content-class="p-0">
+          <SideMenu />
         </n-layout-sider>
         <n-layout content-class="p-6">
-          <slot />
+          <div><slot /></div>
         </n-layout>
       </n-layout>
     </n-layout>
