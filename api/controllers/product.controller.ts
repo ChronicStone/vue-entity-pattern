@@ -10,7 +10,7 @@ export const ProductController = {
   async one(params: { id: string }) {
     const product = PRODUCTS_STORE.find((p) => p.id === params.id);
     if (!product) {
-      throw new Error('Product not found');
+      throw new Error(`Product ${params.id} not found`);
     }
 
     return await Promise.resolve(product);

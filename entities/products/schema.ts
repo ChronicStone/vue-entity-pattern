@@ -1,10 +1,11 @@
 import { buildFormSchema, buildGridSchema, buildTableSchema } from '@chronicstone/vue-sweettools';
 import { ApiClient } from '~/api';
 import { productStatusDto } from '~/api/dto/product.dto';
+import type { Product } from '~/types/entities/product';
 
 export function productTableSchema() {
   return buildTableSchema({
-    tableKey: '',
+    tableKey: 'products',
     remote: false,
     searchQuery: ['name', 'description'],
     filters: [productStatusFilter({ key: 'status' }), userFilter({ key: 'sellerId', label: 'Seller' })],
@@ -21,6 +22,11 @@ export function productTableSchema() {
     ],
     datasource: ApiClient.products.list,
     rowActions: [
+      {
+        label: 'Open details',
+        icon: 'mdi:eye',
+        link: ({ rowData }) => appLink({ name: 'products-productId', params: { productId: rowData.id } }),
+      },
       {
         label: 'Update status',
         icon: 'mdi:update',
@@ -45,8 +51,22 @@ export function productFormSchema() {
 }
 
 export function productProfileSchema() {
-  return buildGridSchema({
-    fields: [],
+  return buildGridSchema<Product>({
+    fields: [
+      { key: 'name', label: 'Name' },
+      { key: 'status', label: 'Status', render: ({ data }) => renderProductStatus(data.status) },
+      { key: 'tags', label: 'Tags', render: ({ data }) => renderProductTags(data.tags ?? [], 2) },
+      { key: 'category', label: 'Category' },
+      { key: 'price', label: 'Price', render: ({ data }) => formatCurrency(data.price) },
+      { key: 'stock', label: 'Stock', render: ({ data }) => `${data.stock} units` },
+      {
+        key: 'description',
+        label: 'Description',
+        ellipsis: true,
+        render: ({ data }) => renderTextEllipsis(data.description, { lineClamp: 2 }),
+        fitWidth: false,
+      },
+    ],
   });
 }
 

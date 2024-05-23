@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true,
   },
-  modules: ['@bg-dev/nuxt-naiveui', '@pinia/nuxt', '@unocss/nuxt', 'nuxt-icon'],
+  modules: ['@bg-dev/nuxt-naiveui', '@pinia/nuxt', '@unocss/nuxt', 'nuxt-icon', '@vue-macros/nuxt'],
   imports: {
     dirs: ['./store', './composables', 'entities/**/*', './utils/**/*', './config'],
   },
@@ -21,5 +21,5 @@ export default defineNuxtConfig({
   experimental: {
     typedPages: true,
   },
-  css: ['@/assets/styles/styles.scss'],
+  css: ['@/assets/styles/styles.scss', '@unocss/reset/tailwind.css'],
 });

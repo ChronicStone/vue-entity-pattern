@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@chronicstone/vue-sweettools": "1.0.0-rc47",
+    "@chronicstone/vue-sweettools": "1.0.0-rc49",
     "@faker-js/faker": "8.4.1",
     "@nuxt/eslint": "latest",
     "@unocss/nuxt": "0.60.3",
@@ -28,6 +28,7 @@
     "@nuxtjs/tailwindcss": "latest",
     "@pinia/nuxt": "latest",
     "@typescript-eslint/parser": "6.8.0",
+    "@vue-macros/nuxt": "latest",
     "eslint": "8.50.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-prettier": "5.0.1",
