@@ -1,6 +1,6 @@
 <script setup lang="tsx">
-import { useLocalizedValidators, useFormApi } from '@chronicstone/vue-sweettools';
-import { useThemeVars, NButton } from 'naive-ui';
+import { useFormApi } from '@chronicstone/vue-sweettools';
+import { useThemeVars } from 'naive-ui';
 
 const route = useRoute();
 const appStore = useAppStore();

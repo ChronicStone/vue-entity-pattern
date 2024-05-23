@@ -5,6 +5,7 @@ import {
   buildGridSchema,
   buildTableSchema,
 } from '@chronicstone/vue-sweettools';
+import { faker } from '@faker-js/faker';
 import { ApiClient } from '~/api';
 import { productCategoryDto, productStatusDto } from '~/api/dto/product.dto';
 import type { Product } from '~/types/entities/product';
@@ -34,7 +35,12 @@ export function productTableSchema() {
     datasource: ApiClient.products.list,
     actions: [
       {
-        label: 'Import products',
+        label: 'Create product',
+        icon: 'mdi:plus',
+        action: () => navigateTo({ name: 'products-create' }),
+      },
+      {
+        label: 'Import bulk products',
         icon: 'mdi:import',
         action: () => navigateTo({ name: 'products-import' }),
       },
@@ -51,6 +57,12 @@ export function productTableSchema() {
         link: ({ rowData }) => appLink({ name: 'products-productId', params: { productId: rowData.id } }),
       },
       {
+        label: 'Update product',
+        icon: 'mdi:pen',
+        link: ({ rowData }) =>
+          appLink({ name: 'products-productId-update', params: { productId: rowData.id } }),
+      },
+      {
         label: 'Update status',
         icon: 'mdi:update',
         action: ({ rowData, tableApi }) =>
@@ -62,6 +74,55 @@ export function productTableSchema() {
         action: ({ rowData, tableApi }) =>
           deleteProduct(rowData).then((refresh) => refresh && tableApi.refreshData()),
         condition: ({ rowData }) => rowData.status === 'Disabled' || rowData.status === 'Draft',
+      },
+    ],
+  });
+}
+
+export function productFormSchema() {
+  return buildFormSchema({
+    fields: [
+      { key: 'name', type: 'text', label: 'Name', required: true },
+      {
+        key: 'category',
+        type: 'select',
+        label: 'Category',
+        required: true,
+        options: Object.values(productCategoryDto.enum),
+      },
+      { key: 'description', type: 'textarea', label: 'Description', required: false, size: 8 },
+      { key: 'price', type: 'number', label: 'Price', required: true, fieldParams: { prefix: '$' } },
+      { key: 'stock', type: 'number', label: 'Stock', required: true, fieldParams: { min: 0, step: 1 } },
+      {
+        key: 'sellerId',
+        type: 'select',
+        label: 'Seller',
+        required: true,
+        options: getUserOptions,
+        fieldParams: {
+          renderTag: renderUserSelectTag({ multiple: false }),
+          renderLabel: renderUserSelectLabel,
+        },
+      },
+      // { key: 'images', type: 'file', label: 'Images', required: true, multiple: true },
+      { key: 'tags', type: 'tag', label: 'Tags', required: false },
+      {
+        key: 'images',
+        type: 'upload',
+        label: 'Images',
+        required: true,
+        multiple: true,
+        output: 'url',
+        fieldParams: {
+          listType: 'image-card',
+        },
+        uploadHandler: (opts) => {
+          opts.file.url = faker.image.url();
+          opts.file.percentage = 100;
+          opts.file.status = 'finished';
+          opts.onFinish();
+        },
+        size: 8,
       },
     ],
   });
