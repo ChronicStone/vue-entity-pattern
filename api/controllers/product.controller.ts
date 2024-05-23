@@ -1,7 +1,12 @@
 import type { z } from 'zod';
 import { faker } from '@faker-js/faker';
 import { PRODUCTS_STORE, USERS_STORE } from '../store';
-import { importProductsDto, productStatusDto, type createProductDto } from '../dto/product.dto';
+import {
+  importProductsDto,
+  productStatusDto,
+  updateProductDto,
+  type createProductDto,
+} from '../dto/product.dto';
 
 export const ProductController = {
   async list() {
@@ -30,7 +35,7 @@ export const ProductController = {
 
     return await Promise.resolve(createdProducts);
   },
-  async update(productId: string, product: Partial<z.infer<typeof createProductDto>>) {
+  async update(productId: string, product: Partial<z.infer<typeof updateProductDto>>) {
     const productIndex = PRODUCTS_STORE.findIndex((p) => p.id === productId);
     if (productIndex === -1) {
       throw new Error('Product not found');

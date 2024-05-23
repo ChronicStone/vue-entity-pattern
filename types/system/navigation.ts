@@ -4,5 +4,5 @@ export type NavigationItem = {
   label: string;
   icon: string;
   path: RouteLocationNormalized['name'];
-  condition?: () => boolean;
+  entities?: Array<'admin' | 'user'>;
 };

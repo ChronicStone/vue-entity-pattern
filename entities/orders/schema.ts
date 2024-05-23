@@ -2,13 +2,19 @@ import { buildFormSchema, buildTableSchema, timeRangeFilter } from '@chronicston
 import { ApiClient } from '~/api';
 
 export function orderTableSchema(params?: { productId?: string }) {
+  const userStore = useUserStore();
   return buildTableSchema({
     tableKey: 'orders',
     remote: false,
     searchQuery: ['product.name', 'product.category', 'product.tags'],
-    staticFilters: params?.productId
-      ? [{ key: 'productId', value: params.productId, matchMode: 'equals' }]
-      : [],
+    staticFilters: [
+      ...(params?.productId
+        ? [{ key: 'productId', value: params.productId, matchMode: 'equals' as const }]
+        : []),
+      ...(userStore.activeEntity === 'user' && userStore.activeUserId
+        ? [{ key: 'buyerId', value: userStore.activeUserId, matchMode: 'equals' as const }]
+        : []),
+    ],
     filters: [
       userFilter({ key: 'buyerId', label: 'Buyer' }),
       //   userFilter({ key: 'product.seller.id', label: 'Seller' }),
@@ -17,12 +23,6 @@ export function orderTableSchema(params?: { productId?: string }) {
     columns: [
       { key: 'id', label: 'ID', summary: [{ value: 'TOTAL' }] },
       { key: 'buyer.lastName', label: 'Buyer', render: (t) => renderUserTag(t.buyer), width: 250 },
-      {
-        key: 'product.seller.lastName',
-        label: 'Seller',
-        render: (t) => renderUserTag(t.product.seller),
-        width: 250,
-      },
       {
         key: 'product.name',
         label: 'Product',

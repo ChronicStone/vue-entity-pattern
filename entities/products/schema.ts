@@ -1,3 +1,4 @@
+import { ExcelSchemaBuilder } from '@chronicstone/typed-xlsx';
 import {
   buildExcelSchema,
   buildFormSchema,
@@ -9,10 +10,15 @@ import { productCategoryDto, productStatusDto } from '~/api/dto/product.dto';
 import type { Product } from '~/types/entities/product';
 
 export function productTableSchema() {
+  const userStore = useUserStore();
   return buildTableSchema({
     tableKey: 'products',
     remote: false,
     searchQuery: ['name', 'description'],
+    staticFilters:
+      userStore.activeEntity === 'user'
+        ? [{ key: 'sellerId', value: userStore.activeUserId, matchMode: 'equals' }]
+        : [],
     filters: [productStatusFilter({ key: 'status' }), userFilter({ key: 'sellerId', label: 'Seller' })],
     columns: [
       { key: 'seller.lastName', label: 'Seller', render: (t) => renderUserTag(t.seller), width: 250 },
@@ -31,6 +37,11 @@ export function productTableSchema() {
         label: 'Import products',
         icon: 'mdi:import',
         action: () => navigateTo({ name: 'products-import' }),
+      },
+      {
+        label: 'Export products',
+        icon: 'mdi:export',
+        action: ({ selected }) => exportProducts(selected),
       },
     ],
     rowActions: [
@@ -152,4 +163,24 @@ export function productStatusFormSchema() {
       },
     ],
   });
+}
+
+export function productExcelExportSchema() {
+  return ExcelSchemaBuilder.create<Product>()
+    .withFormatters({
+      currency: (currency: string) => `${currency}#,##0.00`,
+    })
+    .column('name', { key: 'name', label: 'Name' })
+    .column('status', { key: 'status', label: 'Status' })
+    .column('category', { key: 'category', label: 'Category' })
+    .column('price', {
+      key: 'price',
+      label: 'Price',
+      format: { preset: 'currency', params: '$' },
+    })
+    .column('stock', { key: 'stock', label: 'Stock' })
+    .column('description', { key: 'description', label: 'Description' })
+    .column('images', { key: 'images', label: 'Images' })
+    .column('tags', { key: 'tags', label: 'Tags', transform: (t) => t?.join(', ') ?? '' })
+    .build();
 }

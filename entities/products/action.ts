@@ -1,3 +1,4 @@
+import { ExcelBuilder } from '@chronicstone/typed-xlsx';
 import { ApiClient } from '~/api';
 import type { Product } from '~/types/entities/product';
 
@@ -43,4 +44,24 @@ export async function deleteProduct(product: Product) {
   } finally {
     appStore.stopLoading();
   }
+}
+
+export async function exportProducts(products: Product[]) {
+  const { $formApi, $messageApi } = useNuxtApp();
+  if (!products.length) return $messageApi.warning('Select at least one product');
+  const { formData, isCompleted } = await $formApi.createForm(
+    excelExportFileName({
+      title: 'Export products',
+      defaultName: `products_${new Date().toISOString().split('T')[0]}`,
+    }),
+  );
+  if (!isCompleted) return;
+
+  const schema = productExcelExportSchema();
+  const file = await ExcelBuilder.create()
+    .sheet('Products')
+    .addTable({ schema, data: products })
+    .build({ output: 'buffer' });
+
+  downloadSpreadsheet({ buffer: file, fileName: `${formData.fileName}.xlsx` });
 }
