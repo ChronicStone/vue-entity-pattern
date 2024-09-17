@@ -1,75 +1,22 @@
-# Nuxt 3 Minimal Starter
+# ENTITY REPOSITORTY PATTERN
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+The entity repository pattern is a front-end design pattern that allows the centralization & collocation of business logic under the umbrella of a single entity, mainly to build back-office applications.
 
-## Setup
+It uses a few patterns to achieve this:
+- Schema-driven UI (Tables, Forms, Data display ...)
+- Function-driven UI interactions (Render a form within a modal through a promise, ...)
 
-Make sure to install the dependencies:
+It also embraces the full power of typescript & nuxt, alongside the powerful reactivity of vue to give developpers a very good developper experience, while keeping the codebase very simple, enforcing consistency and maintainability.
 
-```bash
-# npm
-npm install
+## Entities
 
-# pnpm
-pnpm install
+Under the `entities` directory, you'll find sub-directories for each entity. Each entity is a directory that contains:
+- A `schema.ts` file that defines the schema for the entity's tables, profiles, forms, etc.
+- A `action.ts` file that defines the actions that can be performed on the entity.
+- A `render.tsx` file that defines the rendering logic for the entity.
+- A `utils.ts` file that defines utility functions for the entity.
+- A `filter.ts` file that defines the filters for the entity's tables.
 
-# yarn
-yarn install
+## Components
 
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Under the `components/Entity` directory, you'll find sub-directories for each entity, each containing the actual forms / tables / profiles / etc. These components are fairly simple, since most of the logic is defined in the schema files, and the form / tables abstractions are provided by the `sweettools` package.b

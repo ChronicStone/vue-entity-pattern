@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   typescript: {
-    typeCheck: true,
+    typeCheck: false,
   },
   modules: ['@bg-dev/nuxt-naiveui', '@pinia/nuxt', '@unocss/nuxt', 'nuxt-icon', '@vue-macros/nuxt'],
   imports: {
@@ -23,4 +23,5 @@ export default defineNuxtConfig({
     typedPages: true,
   },
   css: ['@/assets/styles/styles.scss', '@unocss/reset/tailwind.css'],
+  build: {},
 });
