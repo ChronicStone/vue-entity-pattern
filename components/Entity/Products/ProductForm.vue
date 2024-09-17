@@ -31,7 +31,6 @@ async function createProduct() {
     $messageApi.success('Product created');
     navigateTo({ name: 'products-productId', params: { productId: createdProduct.id } });
   } catch (error) {
-    console.error(error);
     $messageApi.error(error instanceof Error ? error.message : 'Unexpected error');
   }
 }
@@ -43,7 +42,6 @@ async function updateProduct() {
     $messageApi.success('Product updated');
     navigateTo({ name: 'products-productId', params: { productId: updatedProduct.id } });
   } catch (error) {
-    console.error(error);
     $messageApi.error(error instanceof Error ? error.message : 'Unexpected error');
   }
 }

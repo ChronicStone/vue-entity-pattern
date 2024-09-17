@@ -5,7 +5,7 @@ import { ApiClient } from '~/api';
 const { $messageApi } = useNuxtApp();
 const productId = defineProp<string>('productId', { required: true });
 
-const { data, pending } = useAsyncState(() => ApiClient.products.one({ id: productId.value }), {
+const { data } = useAsyncState(() => ApiClient.products.one({ id: productId.value }), {
   watch: [productId],
   onError(error) {
     $messageApi.error(error instanceof Error ? error.message : 'Product not found');
